@@ -3,21 +3,17 @@
 #---------------------------------
 
 resource "aws_lb" "ext-alb" {
-  name     = "ext-alb"
+  name     = var.name
   internal = false
-  security_groups = [
-    aws_security_group.ext-alb-sg.id,
-  ]
+  security_groups = [var.public-sg]
 
-  subnets = [
-    aws_subnet.public[0].id,
-    aws_subnet.public[1].id
-  ]
+  subnets = [ var.public-sbn-1,
+  var.public-sbn-2 ]
 
   tags = merge(
     var.tags,
     {
-      Name = "savvytek-ext-alb"
+      Name = var.name
     },
   )
 
