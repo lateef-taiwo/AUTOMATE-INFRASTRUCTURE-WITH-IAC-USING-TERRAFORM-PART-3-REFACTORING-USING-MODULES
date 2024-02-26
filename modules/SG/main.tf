@@ -5,7 +5,7 @@ resource "aws_security_group" "savvytek" {
   description = each.value.description
   vpc_id      = var.vpc_id
 
- 
+
   egress {
     from_port   = 0
     to_port     = 0

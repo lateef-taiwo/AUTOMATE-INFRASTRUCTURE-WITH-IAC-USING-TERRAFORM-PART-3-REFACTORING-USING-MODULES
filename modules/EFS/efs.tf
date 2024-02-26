@@ -9,7 +9,7 @@ resource "aws_kms_key" "savvytek-kms" {
     {
       "Sid": "Enable IAM User Permissions",
       "Effect": "Allow",
-      "Principal": { "AWS": "arn:aws:iam::${var.account_no}:user/serverless" },
+      "Principal": { "AWS": "arn:aws:iam::005654795190:user/Abdul" },
       "Action": "kms:*",
       "Resource": "*"
     }
@@ -32,7 +32,7 @@ resource "aws_efs_file_system" "savvytek-efs" {
   tags = merge(
     var.tags,
     {
-      Name = "savvytek-efs"
+      Name = "savvytek-file-system"
     },
   )
 }
@@ -41,16 +41,16 @@ resource "aws_efs_file_system" "savvytek-efs" {
 # set first mount target for the EFS 
 resource "aws_efs_mount_target" "subnet-1" {
   file_system_id  = aws_efs_file_system.savvytek-efs.id
-  subnet_id       = aws_subnet.private[0].id
-  security_groups = [aws_security_group.datalayer-sg.id]
+  subnet_id       = var.efs-subnet-1
+  security_groups = var.efs-sg
 }
 
 
 # set second mount target for the EFS 
 resource "aws_efs_mount_target" "subnet-2" {
   file_system_id  = aws_efs_file_system.savvytek-efs.id
-  subnet_id       = aws_subnet.private[1].id
-  security_groups = [aws_security_group.datalayer-sg.id]
+  subnet_id       = var.efs-subnet-2
+  security_groups = var.efs-sg
 }
 
 

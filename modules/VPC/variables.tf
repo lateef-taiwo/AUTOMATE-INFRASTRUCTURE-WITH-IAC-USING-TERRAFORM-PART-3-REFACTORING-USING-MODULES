@@ -46,7 +46,7 @@ variable "tags" {
 
 variable "name" {
   type    = string
-  default = "ACS"
+  default = "savvytek"
 
 }
 variable "environment" {

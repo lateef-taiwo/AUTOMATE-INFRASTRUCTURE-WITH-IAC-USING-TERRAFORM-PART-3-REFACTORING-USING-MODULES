@@ -5,9 +5,9 @@ resource "aws_security_group_rule" "inbound-alb-http" {
   to_port           = 80
   type              = "ingress"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.ACS["ext-alb-sg"].id
+  security_group_id = aws_security_group.savvytek["ext-alb-sg"].id
 }
- 
+
 
 resource "aws_security_group_rule" "inbound-alb-https" {
   from_port         = 443
@@ -15,7 +15,7 @@ resource "aws_security_group_rule" "inbound-alb-https" {
   to_port           = 443
   type              = "ingress"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.ACS["ext-alb-sg"].id
+  security_group_id = aws_security_group.savvytek["ext-alb-sg"].id
 }
 
 # security group rule for bastion to allow assh access fro your local machine
@@ -25,7 +25,7 @@ resource "aws_security_group_rule" "inbound-ssh-bastion" {
   to_port           = 22
   type              = "ingress"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.ACS["bastion-sg"].id
+  security_group_id = aws_security_group.savvytek["bastion-sg"].id
 }
 
 
@@ -36,8 +36,8 @@ resource "aws_security_group_rule" "inbound-nginx-http" {
   from_port                = 443
   to_port                  = 443
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.ACS["ext-alb-sg"].id
-  security_group_id        = aws_security_group.ACS["nginx-sg"].id
+  source_security_group_id = aws_security_group.savvytek["ext-alb-sg"].id
+  security_group_id        = aws_security_group.savvytek["nginx-sg"].id
 }
 
 
@@ -46,8 +46,8 @@ resource "aws_security_group_rule" "inbound-bastion-ssh" {
   from_port                = 22
   to_port                  = 22
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.ACS["bastion-sg"].id
-  security_group_id        = aws_security_group.ACS["nginx-sg"].id
+  source_security_group_id = aws_security_group.savvytek["bastion-sg"].id
+  security_group_id        = aws_security_group.savvytek["nginx-sg"].id
 }
 
 
@@ -59,8 +59,8 @@ resource "aws_security_group_rule" "inbound-ialb-https" {
   from_port                = 443
   to_port                  = 443
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.ACS["nginx-sg"].id
-  security_group_id        = aws_security_group.ACS["int-alb-sg"].id
+  source_security_group_id = aws_security_group.savvytek["nginx-sg"].id
+  security_group_id        = aws_security_group.savvytek["int-alb-sg"].id
 }
 
 
@@ -72,8 +72,8 @@ resource "aws_security_group_rule" "inbound-web-https" {
   from_port                = 443
   to_port                  = 443
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.ACS["int-alb-sg"].id
-  security_group_id        = aws_security_group.ACS["webserver-sg"].id
+  source_security_group_id = aws_security_group.savvytek["int-alb-sg"].id
+  security_group_id        = aws_security_group.savvytek["webserver-sg"].id
 }
 
 resource "aws_security_group_rule" "inbound-web-ssh" {
@@ -81,8 +81,8 @@ resource "aws_security_group_rule" "inbound-web-ssh" {
   from_port                = 22
   to_port                  = 22
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.ACS["bastion-sg"].id
-  security_group_id        = aws_security_group.ACS["webserver-sg"].id
+  source_security_group_id = aws_security_group.savvytek["bastion-sg"].id
+  security_group_id        = aws_security_group.savvytek["webserver-sg"].id
 }
 
 
@@ -93,8 +93,8 @@ resource "aws_security_group_rule" "inbound-nfs-port" {
   from_port                = 2049
   to_port                  = 2049
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.ACS["webserver-sg"].id
-  security_group_id        = aws_security_group.ACS["datalayer-sg"].id
+  source_security_group_id = aws_security_group.savvytek["webserver-sg"].id
+  security_group_id        = aws_security_group.savvytek["datalayer-sg"].id
 }
 
 resource "aws_security_group_rule" "inbound-mysql-bastion" {
@@ -102,8 +102,8 @@ resource "aws_security_group_rule" "inbound-mysql-bastion" {
   from_port                = 3306
   to_port                  = 3306
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.ACS["bastion-sg"].id
-  security_group_id        = aws_security_group.ACS["datalayer-sg"].id
+  source_security_group_id = aws_security_group.savvytek["bastion-sg"].id
+  security_group_id        = aws_security_group.savvytek["datalayer-sg"].id
 }
 
 resource "aws_security_group_rule" "inbound-mysql-webserver" {
@@ -111,6 +111,6 @@ resource "aws_security_group_rule" "inbound-mysql-webserver" {
   from_port                = 3306
   to_port                  = 3306
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.ACS["webserver-sg"].id
-  security_group_id        = aws_security_group.ACS["datalayer-sg"].id
+  source_security_group_id = aws_security_group.savvytek["webserver-sg"].id
+  security_group_id        = aws_security_group.savvytek["datalayer-sg"].id
 }

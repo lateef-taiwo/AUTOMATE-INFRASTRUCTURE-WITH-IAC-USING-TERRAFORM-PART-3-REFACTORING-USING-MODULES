@@ -11,12 +11,12 @@ variable "db-password" {
 }
 
 variable "db-sg" {
-  type = list
+  type        = list(any)
   description = "The DB security group"
 }
 
 variable "private_subnets" {
-  type        = list
+  type        = list(any)
   description = "Private subnets fro DB subnets group"
 }
 

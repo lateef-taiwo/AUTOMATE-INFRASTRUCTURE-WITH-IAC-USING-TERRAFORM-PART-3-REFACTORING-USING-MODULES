@@ -20,29 +20,29 @@ variable "ami-bastion" {
 }
 
 variable "web-sg" {
-  type = list
+  type        = list(any)
   description = "security group for webservers"
 }
 
 variable "bastion-sg" {
-  type = list
+  type        = list(any)
   description = "security group for bastion"
 }
 
 variable "nginx-sg" {
-  type = list
+  type        = list(any)
   description = "security group for nginx"
 }
 
 variable "private_subnets" {
-  type = list
+  type        = list(any)
   description = "first private subnets for internal ALB"
 }
 
 
 variable "public_subnets" {
-  type = list
-  description = "Seconf subnet for ecternal ALB"
+  type        = list(any)
+  description = "Second subnet for external ALB"
 }
 
 
