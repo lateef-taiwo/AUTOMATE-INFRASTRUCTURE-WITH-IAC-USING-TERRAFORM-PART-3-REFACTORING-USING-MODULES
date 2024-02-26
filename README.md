@@ -43,3 +43,32 @@ You must be aware that Terraform stores secret data inside the state files. Pass
 Next, we will create a DynamoDB table to handle locks and perform consistency checks. In previous projects, locks were handled with a local file as shown in `terraform.tfstate.lock.info`. Since we now have a team mindset, causing us to configure S3 as our backend to store state file, we will do the same to handle locking. Therefore, with a cloud storage database like DynamoDB, anyone running Terraform against the same infrastructure can use a central location to control a situation where terraform is running at the same time from multiple different people.
 
 * Dynamo DB resource for locking and consistency checking:
+
+        resource "aws_dynamodb_table" "terraform_locks" {
+        name         = "terraform-locks"
+        billing_mode = "PAY_PER_REQUEST"
+        hash_key     = "LockID"
+        attribute {
+            name = "LockID"
+            type = "S"
+        }
+        }
+
+Terraform expects that both S3 bucket and DynamoDB resources are already created before we configure the backend. Run terraform apply to provision resources.
+
+
+
+* Configure S3 Backend
+
+        terraform {
+        backend "s3" {
+            bucket         = "iwunzegp247365-terraform-bucket"
+            key            = "global/s3/terraform.tfstate"
+            region         = "us-east-1"
+            dynamodb_table = "terraform-locks"
+            encrypt        = true
+        }
+        }
+
+Re-initialize the backend. Run terraform init and confirm you are happy to change the backend by typing yes.
+
