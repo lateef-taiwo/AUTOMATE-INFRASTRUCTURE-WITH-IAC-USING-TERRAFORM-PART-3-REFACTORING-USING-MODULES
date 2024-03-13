@@ -220,3 +220,6 @@ provider "aws" {
     ![](./images/route53.png)
 
     ![](./images/acm.png)
+
+### Congratulations !!!
+You have done a great job developing and refactoring AWS Infrastructure as Code with Terraform!
