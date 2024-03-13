@@ -71,3 +71,33 @@ Terraform expects that both S3 bucket and DynamoDB resources are already created
 
 Re-initialize the backend. Run terraform init and confirm you are happy to change the backend by typing yes.
 
+![](./images/tf-init.png)
+
+* Verify the changes
+
+* Open the AWS console now to see what happened you should be able to see the following:
+
+    * tfstatefile is now inside the S3 bucket.
+
+    ![](./images/s3.png)
+    ![](./images/s3-2.png)
+    ![](./images/s3-3.png)
+    ![](./images/s3-4.png)
+    ![](./images/s3-5.png)
+
+
+    * DynamoDB table which we create has an entry which includes state file status
+    ![](./images/dynamodb-terraform-locks.png)
+
+
+
+Add the code below to output.tf file so that the s3 bucket ARN and DynamoDB table name can be displayed.
+
+    output "s3_bucket_arn" {
+    value       = aws_s3_bucket.terraform_state.arn
+    description = "The ARN of the S3 bucket"
+    }
+    output "dynamodb_table_name" {
+    value       = aws_dynamodb_table.terraform_locks.name
+    description = "The name of the DynamoDB table"
+    }
