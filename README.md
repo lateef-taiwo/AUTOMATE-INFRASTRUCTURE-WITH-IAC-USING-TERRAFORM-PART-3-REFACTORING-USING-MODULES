@@ -167,3 +167,56 @@ provider "aws" {
 * You can further split the codes into smaller partitions just for clarity.
 
 * In the provider.tf file, paste the code below into it
+
+        terraform {
+        required_providers {
+            aws = {
+            source = "hashicorp/aws"
+            version = "~> 4.0"
+            }
+        }
+        }
+
+        provider "aws" {
+        region = var.region
+        }
+
+* Now run terraform validate to validate the configuration. If satisfied, run terraform plan and terraform apply, to create the infrastructure.
+
+    `tf validate`
+
+    ![](./images/tf-validate.png)
+
+    `tf plan`
+
+    ![](./images/tf-plan.png)
+
+    `tf apply`
+
+    ![](./images/vpc.png)
+
+    ![](./images/subnets.png)
+
+    ![](./images/rts.png)
+
+    ![](./images/sgs.png)
+
+    ![](./images/asgs.png)
+
+    ![](./images/efs.png)
+
+    ![](./images/efs-access-points.png)
+
+    ![](./images/eip.png)
+
+    ![](./images/igw.png)
+
+    ![](./images/nat-gw.png)
+
+    ![](./images/instances.png)
+
+    ![](./images/rds.png)
+
+    ![](./images/route53.png)
+
+    ![](./images/acm.png)
