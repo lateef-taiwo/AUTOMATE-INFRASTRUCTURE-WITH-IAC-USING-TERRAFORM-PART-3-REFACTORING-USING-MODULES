@@ -144,3 +144,26 @@ FOR EXAMPLE
 ### REFACTORING USING MODULES
 
     Create new directories and move the respective files into them.
+
+![](./images/modules.png)
+
+![](./images/modules-2.png)
+
+
+Notice there is a variable.tf file in all my directories. Go ahead and create them too.
+
+* Create a new main.tf and provider.tf file in the root directory.
+
+![](./images/modules-3.png)
+
+* Cut this section of code from /modules/VPC/main.tf and paste it in the provider.tf file.
+
+provider "aws" {
+  region = var.region
+}
+
+* Modify the modules and declare all the respective variables in their variables.tf file.
+
+* You can further split the codes into smaller partitions just for clarity.
+
+* In the provider.tf file, paste the code below into it
