@@ -5,3 +5,4 @@ root/.terraform_bkp/*
 terraform.tfstate
 root/.terraform.lock.hcl
 root/.terraform/**
+Jenkinsfile

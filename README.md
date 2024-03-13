@@ -57,12 +57,11 @@ Next, we will create a DynamoDB table to handle locks and perform consistency ch
 Terraform expects that both S3 bucket and DynamoDB resources are already created before we configure the backend. Run terraform apply to provision resources.
 
 
-
 * Configure S3 Backend
 
         terraform {
         backend "s3" {
-            bucket         = "iwunzegp247365-terraform-bucket"
+            bucket         = "savvy-dev-terraform-bucket"
             key            = "global/s3/terraform.tfstate"
             region         = "us-east-1"
             dynamodb_table = "terraform-locks"
