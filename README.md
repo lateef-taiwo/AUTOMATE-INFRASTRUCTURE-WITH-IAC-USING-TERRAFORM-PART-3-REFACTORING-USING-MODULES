@@ -101,3 +101,46 @@ Add the code below to output.tf file so that the s3 bucket ARN and DynamoDB tabl
     value       = aws_dynamodb_table.terraform_locks.name
     description = "The name of the DynamoDB table"
     }
+
+### Refactor Security Groups creation with dynamic blocks
+
+* EC2 refactoring with Map and Lookup
+
+Amazon Machine Image (AMI) is a regional service which means it is only available in the region it was created. But what if we change the region later, and want to dynamically pick up AMI IDs based on the available AMIs in that region? This is where we will introduce Map and Lookup functions.
+
+Map uses a key and value pairs as a data structure that can be set as a default type for variables.
+
+FOR EXAMPLE
+
+    variable "images" {
+    type = "map"
+    default = {
+        us-east-1 = "image-1234"
+        us-west-2 = "image-23834"
+       }
+    }
+
+To select an appropriate AMI per region, we will use a lookup function which has following syntax: lookup(map, key, [default]).
+
+Note: A default value is better to be used to avoid failure whenever the map data has no key.
+
+FOR EXAMPLE
+
+    resource "aws_instace" "web" {
+    ami  = "${lookup(var.images, var.region), "ami-12323"}
+    }
+
+### Conditional Expressions
+
+If you want to make some decision and choose some resource based on a condition – you shall use Terraform Conditional Expressions. In general, the syntax is as following: condition ? true_val : false_val
+
+FOR EXAMPLE
+
+        resource "aws_db_instance" "read_replica" {
+    count               = var.create_read_replica == true ? 1 : 0
+    replicate_source_db = aws_db_instance.this.id
+    }
+
+### REFACTORING USING MODULES
+
+    Create new directories and move the respective files into them.
